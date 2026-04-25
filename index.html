@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>صندوق البناية الذكي</title>
+  <meta name="description" content="تطبيق إدارة الموارد المالية المشتركة للسكان" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="screen active">
+  <div class="login-card">
+    <div class="logo-big">🏢</div>
+    <h1 class="login-title">صندوق البناية الذكي</h1>
+    <p class="login-sub">اختر دورك للمتابعة</p>
+    <div class="role-btns">
+      <button class="role-btn admin-btn" onclick="selectRole('admin')">
+        <span class="role-icon">👤</span>
+        <span class="role-name">مدير</span>
+        <span class="role-desc">تعديل كامل + حفظ</span>
+      </button>
+      <button class="role-btn treasurer-btn" onclick="selectRole('treasurer')">
+        <span class="role-icon">💼</span>
+        <span class="role-name">أمين الصندوق</span>
+        <span class="role-desc">تسجيل قبض + مصاريف</span>
+      </button>
+      <button class="role-btn resident-btn" onclick="selectRole('resident')">
+        <span class="role-icon">👁️</span>
+        <span class="role-name">ساكن</span>
+        <span class="role-desc">عرض فقط</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- PIN MODAL -->
+<div id="pinModal" class="modal-overlay" style="display:none">
+  <div class="modal pin-modal">
+    <div class="modal-title" id="pinTitle">أدخل الكود السري</div>
+    <div class="pin-inputs">
+      <input type="password" class="pin-input" maxlength="1" id="p0" oninput="pinNext(0)" />
+      <input type="password" class="pin-input" maxlength="1" id="p1" oninput="pinNext(1)" />
+      <input type="password" class="pin-input" maxlength="1" id="p2" oninput="pinNext(2)" />
+      <input type="password" class="pin-input" maxlength="1" id="p3" oninput="pinNext(3)" />
+    </div>
+    <div id="pinError" class="pin-error" style="display:none">كود خاطئ، حاول مرة أخرى</div>
+    <div class="modal-actions">
+      <button class="btn" onclick="checkPin()">دخول</button>
+      <button class="btn-outline" onclick="closePinModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" class="screen" style="display:none">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="role-badge" id="roleBadge">مدير</div>
+      <button class="btn-logout" onclick="logout()">خروج</button>
+    </div>
+    <div class="nav" id="mainNav">
+      <button onclick="switchPage('funds')">الصناديق</button>
+      <button onclick="switchPage('transactions')">العمليات</button>
+      <button onclick="switchPage('residents')">السكان</button>
+      <button class="active" onclick="switchPage('dash')">الرئيسية</button>
+    </div>
+    <div class="logo">🏢 صندوق <span>البناية</span></div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="content" id="pageContent"></div>
+
+  <!-- GENERAL MODAL -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none">
+    <div class="modal" id="modalBox"></div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="/supabase-config.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
